@@ -1,12 +1,16 @@
-# Repl.it links
+# Data Structures and Algorithms
 
-## 8/8/19
+My implementation of various data structures and algorithms in C for the Algorithmic Thinking course.
+
+## Repl.it links
+
+### 8/8/19
 
 - Reverse: https://repl.it/repls/QuietGlisteningWamp
 - Sorting: https://repl.it/repls/DelightfulAustereRedundancy
 - RPN calc: https://repl.it/repls/WavyDearSearchengine
 
-## 8/9/19
+### 8/9/19
 
 - Formula validator: https://repl.it/repls/BlankVirtualBusinesssoftware
 - HTML parser: https://repl.it/repls/TrainedCalmElectricity
