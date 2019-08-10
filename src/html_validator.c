@@ -114,8 +114,8 @@ int validate_html(struct node **stack_ptr, char *line, unsigned long len) {
                     goto err;
                 }
 
-                // Finally, close the tag
-                struct tag tag_data = stack_pop(&stack);
+                // Finally, close the tag by popping it off the stack
+                stack_pop(&stack);
             } else {
                 // We're ending the current tag
 
