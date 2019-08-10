@@ -92,7 +92,7 @@ void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int 
     int **new_data = (int **) malloc(sizeof(*new_data) * runs);
     for (int run = 0; run < runs; run++) {
         new_data[run] = malloc(sizeof(*orig_data) * orig_len);
-        memcpy(new_data[run], orig_data, orig_len);
+        memcpy(new_data[run], orig_data, sizeof(*orig_data) * orig_len);
     }
 
     // Run algorithm and track time
