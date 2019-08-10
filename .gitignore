@@ -58,3 +58,4 @@ dkms.conf
 !.vscode/extensions.json
 
 out/*
+.cquery_cache
