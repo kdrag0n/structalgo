@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -Wpedantic -O2 -std=gnu99 -lm
+CFLAGS = -Wall -Wpedantic -O2 -std=gnu99 -g -lm
 
 SRC_DIR = src
 OUT_DIR = out
