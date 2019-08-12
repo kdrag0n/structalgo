@@ -59,3 +59,4 @@ dkms.conf
 
 out/*
 .cquery_cache
+compile_commands.json
