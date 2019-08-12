@@ -10,22 +10,6 @@
    "-g", 
    "-lm", 
    "-o", 
-   "out/formula_validator", 
-   "src/formula_validator.c"
-  ], 
-  "file": "src/formula_validator.c"
- }, 
- {
-  "directory": "/Users/dragon/code/structalgo", 
-  "arguments": [
-   "clang", 
-   "-Wall", 
-   "-Wpedantic", 
-   "-O2", 
-   "-std=gnu99", 
-   "-g", 
-   "-lm", 
-   "-o", 
    "out/maze_solver", 
    "src/maze_solver.c"
   ], 
@@ -58,22 +42,6 @@
    "-g", 
    "-lm", 
    "-o", 
-   "out/html_validator", 
-   "src/html_validator.c"
-  ], 
-  "file": "src/html_validator.c"
- }, 
- {
-  "directory": "/Users/dragon/code/structalgo", 
-  "arguments": [
-   "clang", 
-   "-Wall", 
-   "-Wpedantic", 
-   "-O2", 
-   "-std=gnu99", 
-   "-g", 
-   "-lm", 
-   "-o", 
    "out/array_sorting", 
    "src/array_sorting.c"
   ], 
@@ -90,9 +58,57 @@
    "-g", 
    "-lm", 
    "-o", 
+   "out/formula_validator", 
+   "src/formula_validator.c"
+  ], 
+  "file": "src/formula_validator.c"
+ }, 
+ {
+  "directory": "/Users/dragon/code/structalgo", 
+  "arguments": [
+   "clang", 
+   "-Wall", 
+   "-Wpedantic", 
+   "-O2", 
+   "-std=gnu99", 
+   "-g", 
+   "-lm", 
+   "-o", 
    "out/array_reversal", 
    "src/array_reversal.c"
   ], 
   "file": "src/array_reversal.c"
+ }, 
+ {
+  "directory": "/Users/dragon/code/structalgo", 
+  "arguments": [
+   "clang", 
+   "-Wall", 
+   "-Wpedantic", 
+   "-O2", 
+   "-std=gnu99", 
+   "-g", 
+   "-lm", 
+   "-o", 
+   "out/array_merging", 
+   "src/array_merging.c"
+  ], 
+  "file": "src/array_merging.c"
+ }, 
+ {
+  "directory": "/Users/dragon/code/structalgo", 
+  "arguments": [
+   "clang", 
+   "-Wall", 
+   "-Wpedantic", 
+   "-O2", 
+   "-std=gnu99", 
+   "-g", 
+   "-lm", 
+   "-o", 
+   "out/html_validator", 
+   "src/html_validator.c"
+  ], 
+  "file": "src/html_validator.c"
  }
 ]

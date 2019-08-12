@@ -180,7 +180,7 @@ void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int 
     free(new_data);
 }
 
-// TODO: sradixsort qsort heapsort stdlib implementation in bench
+// TODO: sradixsort qsort heapsort mergesort stdlib implementation in bench
 int main(void) {
     int arr[] = {10, 12, 4, 18, 32, 3, 9};
     int len = ARRAY_SIZE(arr);
@@ -191,6 +191,8 @@ int main(void) {
     profile_and_test_algo("Bubble sort", bubble_sort, arr, len);
     profile_and_test_algo("Insertion sort", insertion_sort, arr, len);
     profile_and_test_algo("Quick sort", insertion_sort, arr, len);
+
+    putchar('\n');
 
     return 0;
 }
