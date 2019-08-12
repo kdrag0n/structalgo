@@ -82,6 +82,59 @@ void insertion_sort(int *arr, int len) {
     }
 }
 
+int _qs_partition(int *arr, int lo, int hi) {
+    // Use separate left and right variables to preserve original lo and hi values for final swap
+    int left = lo;
+    int right = hi;
+
+    // Assume the first element will work as a decent pivot value
+    int pivot_elem = arr[lo];
+
+    // Move lo and hi inwards until they overlap
+    while (left < right) {
+        // Move left as close to the pivot as possible while staying on the left (i.e. inwards, -> right)
+        while (left < right && arr[left] <= pivot_elem)
+            left--;
+        
+        // Move right as close to the pivot as possible while staying on the right (i.e. inwards, -> left)
+        while (right >= left && arr[right] > pivot_elem)
+            right--;
+
+        // Swap left and right values if their target indices didn't overlap
+        if (left < right)
+            swap(arr, left, right);
+    }
+
+    // Since we swapped, the right index should now point to the lowest element so assign it
+    arr[lo] = arr[right];
+
+    // Because we now have a (left, right) pair within the array, the right element must be in the center
+    arr[right] = pivot_elem;
+
+    // Return the index of our newly swapped center element
+    return right;
+}
+
+void _qs_sort(int *arr, int lo, int hi) {
+    // Terminate when there's overlap
+    if (hi < lo)
+        return;
+
+    // Partition the current region
+    // Note that this guarantees that pivot_i will be the middle value, so we don't need to include it when sorting
+    int pivot_i = _qs_partition(arr, lo, hi);
+
+    // Sort the lower partition
+    _qs_sort(arr, lo, pivot_i - 1);
+
+    // Sort the higher partition
+    _qs_sort(arr, pivot_i + 1, hi);
+}
+
+void quick_sort(int *arr, int len) {
+    _qs_sort(arr, 0, len - 1);
+}
+
 /*
  * CLI
  */
@@ -114,7 +167,7 @@ void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int 
 
     printf("%s results: ", label);
     print_arr(new_data[0], orig_len);
-    printf("%s time: %.2lf ns\n", label, d_per_run);
+    printf("%s time: %.0lf ns\n", label, d_per_run);
 
     // Free allocated memory
     for (int run = 0; run < runs; run++)
@@ -123,6 +176,7 @@ void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int 
     free(new_data);
 }
 
+// TODO: sradixsort qsort heapsort stdlib implementation in bench
 int main(void) {
     int arr[] = {10, 12, 4, 18, 32, 3, 9};
     int len = ARRAY_SIZE(arr);
@@ -130,8 +184,9 @@ int main(void) {
     printf("Unsorted: ");
     print_arr(arr, len);
 
-    profile_and_test_algo("Bubble sort", bubble_sort, arr, len, 1000);
-    profile_and_test_algo("Insertion sort", insertion_sort, arr, len, 1000);
+    profile_and_test_algo("Bubble sort", bubble_sort, arr, len, 10000);
+    profile_and_test_algo("Insertion sort", insertion_sort, arr, len, 10000);
+    profile_and_test_algo("Quick sort", insertion_sort, arr, len, 10000);
 
     return 0;
 }
