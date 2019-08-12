@@ -38,14 +38,15 @@ void swap(int *arr, int a, int b) {
  */
 
 void insertion_sort(int *arr, int len) {
-    for (int i = 0; i < len; i++) {
-        int next_i = i + 1;
+    for (int i = 1; i < len; i++) {
         int cur = arr[i];
-        int next = arr[next_i];
 
-        if (next < cur) {
-            swap(arr, cur, next);
+        int j = i;
+        while (j > 0 && arr[j - 1] > cur) {
+            arr[j] = arr[j - 1];
+            j--;
         }
+        arr[j] = cur;
     }
 }
 
@@ -124,6 +125,7 @@ int main(void) {
     print_arr(arr, len);
 
     profile_and_test_algo("Bubble sort", bubble_sort, arr, len, 1000);
+    profile_and_test_algo("Insertion sort", insertion_sort, arr, len, 1000);
 
     return 0;
 }
