@@ -100,7 +100,7 @@ static int _qs_partition(int *arr, int lo, int hi) {
     while (left < right) {
         // Move left as close to the pivot as possible while staying on the left (i.e. inwards, -> right)
         while (left < right && arr[left] <= pivot_elem)
-            left--;
+            left++;
         
         // Move right as close to the pivot as possible while staying on the right (i.e. inwards, -> left)
         while (right >= left && arr[right] > pivot_elem)
@@ -228,7 +228,7 @@ int main(void) {
 
     profile_and_test_algo("Bubble sort", bubble_sort, arr, len);
     profile_and_test_algo("Insertion sort", insertion_sort, arr, len);
-    profile_and_test_algo("Quick sort", insertion_sort, arr, len);
+    profile_and_test_algo("Quick sort", quick_sort, arr, len);
 
     putchar('\n');
 
