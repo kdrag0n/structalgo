@@ -7,6 +7,8 @@
  * Constants, types, and macros
  */
 
+#define SORT_RUNS_PER_IMPL 10000
+
 #define NS_PER_SEC 1000000000
 #define true 1
 #define false 0
@@ -147,7 +149,9 @@ void print_arr(int *arr, int len) {
     putchar('\n');
 }
 
-void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int orig_len, int runs) {
+void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int orig_len) {
+    int runs = SORT_RUNS_PER_IMPL;
+
     // Copy data for each run
     int **new_data = (int **) malloc(sizeof(*new_data) * runs);
     for (int run = 0; run < runs; run++) {
@@ -184,9 +188,9 @@ int main(void) {
     printf("Unsorted: ");
     print_arr(arr, len);
 
-    profile_and_test_algo("Bubble sort", bubble_sort, arr, len, 10000);
-    profile_and_test_algo("Insertion sort", insertion_sort, arr, len, 10000);
-    profile_and_test_algo("Quick sort", insertion_sort, arr, len, 10000);
+    profile_and_test_algo("Bubble sort", bubble_sort, arr, len);
+    profile_and_test_algo("Insertion sort", insertion_sort, arr, len);
+    profile_and_test_algo("Quick sort", insertion_sort, arr, len);
 
     return 0;
 }
