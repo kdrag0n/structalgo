@@ -37,25 +37,6 @@ void swap(int *arr, int a, int b) {
  * Sorting implementations
  */
 
-void insertion_sort(int *arr, int len) {
-    // Iterate and sort, element by element, from the beginning
-    for (int i = 1; i < len; i++) {
-        int cur = arr[i];
-
-        // Iterate backwards starting from the current position until we find an element greater than the current one
-        int j = i;
-        while (j > 0 && arr[j - 1] > cur) {
-            // Shift element rightwards to make space for inserting cur
-            arr[j] = arr[j - 1];
-            // Move to the left element
-            j--;
-        }
-
-        // Insert cur at the correct position
-        arr[j] = cur;
-    }
-}
-
 void bubble_sort(int *arr, int len) {
     // init swapped flag to true so it always runs at least once
     bool swapped = true;
@@ -79,6 +60,25 @@ void bubble_sort(int *arr, int len) {
                 swapped = true;
             }
         }
+    }
+}
+
+void insertion_sort(int *arr, int len) {
+    // Iterate and sort, element by element, from the beginning
+    for (int i = 1; i < len; i++) {
+        int cur = arr[i];
+
+        // Iterate backwards starting from the current position until we find an element greater than the current one
+        int j = i;
+        while (j > 0 && arr[j - 1] > cur) {
+            // Shift element rightwards to make space for inserting cur
+            arr[j] = arr[j - 1];
+            // Move to the left element
+            j--;
+        }
+
+        // Insert cur at the correct position
+        arr[j] = cur;
     }
 }
 
