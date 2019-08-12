@@ -3,6 +3,10 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef __linux__
+#include <bsd/stdlib.h>
+#endif
+
 /*
  * Constants, types, and macros
  */
@@ -149,6 +153,14 @@ static void stdlib_qsort(int *arr, int len) {
     qsort(arr, len, sizeof(*arr), int_comparator);
 }
 
+static void stdlib_mergesort(int *arr, int len) {
+    mergesort(arr, len, sizeof(*arr), int_comparator);
+}
+
+static void stdlib_heapsort(int *arr, int len) {
+    heapsort(arr, len, sizeof(*arr), int_comparator);
+}
+
 /*
  * CLI
  */
@@ -210,7 +222,6 @@ static void profile_and_test_algo(const char *label, sort_fn func, int *orig_dat
     free(new_data);
 }
 
-// TODO: sradixsort qsort heapsort mergesort stdlib implementation in bench
 int main(void) {
     int arr[] = {197, 44, 194, 71, 204, 132, 78, 148, 192, 125, 177, 29, 12, 66, 172, 66, 32, 53, 17, 36, 225, 150, 237, 163, 112, 137, 35, 219, 20, 105, 35, 216, 148, 210, 18, 83, 73, 77, 212, 15, 201, 138, 25, 213, 203, 197, 28, 216, 231, 26, 1, 205, 175, 238, 117, 18, 124, 133, 236, 125, 219, 2, 90, 98, 193, 107, 180, 16, 165, 123, 12, 115, 10, 36, 59, 194, 232, 87, 160, 212, 112, 160, 149, 19, 129, 15, 36, 234, 130, 22, 108, 80, 5, 179, 178, 198, 17, 107, 213, 181, 212, 224, 46, 221, 241, 86, 165, 223, 154, 56, 166, 248, 197, 64, 16, 76, 61, 51, 59, 190, 54, 149, 1, 41, 77, 178, 238, 94, 17, 182, 6, 228, 137, 33, 180, 127, 119, 76, 81, 22, 131, 247, 19, 78, 42, 16, 135, 102, 49, 175, 23, 84, 73, 24, 124, 132, 201, 93, 207, 217, 6, 212, 176, 142, 245, 106, 1, 113, 181, 63, 116, 62, 41, 117, 121, 83, 132, 5, 184, 180, 179, 189, 14, 234, 212, 119, 115, 144, 212, 71, 111, 199, 14, 18, 73, 240, 123, 55, 102, 36};
     int len = ARRAY_SIZE(arr);
@@ -222,6 +233,8 @@ int main(void) {
     putchar('\n');
 
     profile_and_test_algo("stdlib quick sort", stdlib_qsort, arr, len);
+    profile_and_test_algo("stdlib merge sort", stdlib_mergesort, arr, len);
+    profile_and_test_algo("stdlib heap sort", stdlib_heapsort, arr, len);
 
     return 0;
 }
