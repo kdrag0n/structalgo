@@ -7,7 +7,7 @@
  * Constants, types, and macros
  */
 
-#define SORT_RUNS_PER_IMPL 10000
+#define SORT_RUNS_PER_IMPL 1000
 
 #define NS_PER_SEC 1000000000
 #define true 1
@@ -22,14 +22,14 @@ typedef void (*sort_fn)(int *arr, int len);
  * Helper functions
  */
 
-unsigned long get_time_ns() {
+static inline unsigned long get_time_ns() {
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
 
     return (ts.tv_sec * NS_PER_SEC) + ts.tv_nsec;
 }
 
-void swap(int *arr, int a, int b) {
+static void swap(int *arr, int a, int b) {
     int temp_a = arr[a];
     arr[a] = arr[b];
     arr[b] = temp_a;
@@ -39,7 +39,7 @@ void swap(int *arr, int a, int b) {
  * Sorting implementations
  */
 
-void bubble_sort(int *arr, int len) {
+static void bubble_sort(int *arr, int len) {
     // init swapped flag to true so it always runs at least once
     bool swapped = true;
 
@@ -65,7 +65,7 @@ void bubble_sort(int *arr, int len) {
     }
 }
 
-void insertion_sort(int *arr, int len) {
+static void insertion_sort(int *arr, int len) {
     // Iterate and sort, element by element, from the beginning
     for (int i = 1; i < len; i++) {
         int cur = arr[i];
@@ -84,7 +84,7 @@ void insertion_sort(int *arr, int len) {
     }
 }
 
-int _qs_partition(int *arr, int lo, int hi) {
+static int _qs_partition(int *arr, int lo, int hi) {
     // Use separate left and right variables to preserve original lo and hi values for final swap
     int left = lo;
     int right = hi;
@@ -117,7 +117,7 @@ int _qs_partition(int *arr, int lo, int hi) {
     return right;
 }
 
-void _qs_sort(int *arr, int lo, int hi) {
+static void _qs_sort(int *arr, int lo, int hi) {
     // Terminate when there's overlap
     if (hi < lo)
         return;
@@ -133,30 +133,52 @@ void _qs_sort(int *arr, int lo, int hi) {
     _qs_sort(arr, pivot_i + 1, hi);
 }
 
-void quick_sort(int *arr, int len) {
+static void quick_sort(int *arr, int len) {
     _qs_sort(arr, 0, len - 1);
+}
+
+/*
+ * stdlib implementation wrappers
+ */
+
+static int int_comparator(const void *a, const void *b) {
+    return *(int *)a - *(int *)b;
+}
+
+static void stdlib_qsort(int *arr, int len) {
+    qsort(arr, len, sizeof(*arr), int_comparator);
 }
 
 /*
  * CLI
  */
 
-void print_arr(int *arr, int len) {
-    for (int i = 0; i < len; i++) {
-        printf("%d ", arr[i]);
+static void print_arr(int *arr, int len) {
+    if (len > 0) {
+        printf("%d", arr[0]);
+
+        for (int i = 1; i < len; i++) {
+            printf(", %d", arr[i]);
+        }
     }
 
     putchar('\n');
 }
 
-void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int orig_len) {
+static void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int orig_len) {
     int runs = SORT_RUNS_PER_IMPL;
+    size_t orig_bytes = sizeof(*orig_data) * orig_len;
+
+    // Sort a reference copy using stdlib functions
+    int *sorted_data = malloc(orig_bytes);
+    memcpy(sorted_data, orig_data, orig_bytes);
+    stdlib_qsort(sorted_data, orig_len);
 
     // Copy data for each run
     int **new_data = (int **) malloc(sizeof(*new_data) * runs);
     for (int run = 0; run < runs; run++) {
-        new_data[run] = malloc(sizeof(*orig_data) * orig_len);
-        memcpy(new_data[run], orig_data, sizeof(*orig_data) * orig_len);
+        new_data[run] = malloc(orig_bytes);
+        memcpy(new_data[run], orig_data, orig_bytes);
     }
 
     // Run algorithm and track time
@@ -165,12 +187,20 @@ void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int 
         func(new_data[run], orig_len);
     unsigned long after = get_time_ns();
 
-    // Find and print conclusive time and results
+    // Find conclusive time
     unsigned long delta = after - before;
     double d_per_run = (double) delta / (double) runs;
 
-    printf("%s results: ", label);
-    print_arr(new_data[0], orig_len);
+    // Verify results and print error if they don't match the reference
+    if (memcmp(sorted_data, new_data[0], orig_bytes)) {
+        fprintf(stderr, "%s returned incorrect results.\nOriginal: ", label);
+        print_arr(orig_data, orig_len);
+        fprintf(stderr, "Expected: ");
+        print_arr(sorted_data, orig_len);
+        fprintf(stderr, "Found: ");
+        print_arr(new_data[0], orig_len);
+    }
+
     printf("%s time: %.0lf ns\n", label, d_per_run);
 
     // Free allocated memory
@@ -182,17 +212,16 @@ void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int 
 
 // TODO: sradixsort qsort heapsort mergesort stdlib implementation in bench
 int main(void) {
-    int arr[] = {10, 12, 4, 18, 32, 3, 9};
+    int arr[] = {197, 44, 194, 71, 204, 132, 78, 148, 192, 125, 177, 29, 12, 66, 172, 66, 32, 53, 17, 36, 225, 150, 237, 163, 112, 137, 35, 219, 20, 105, 35, 216, 148, 210, 18, 83, 73, 77, 212, 15, 201, 138, 25, 213, 203, 197, 28, 216, 231, 26, 1, 205, 175, 238, 117, 18, 124, 133, 236, 125, 219, 2, 90, 98, 193, 107, 180, 16, 165, 123, 12, 115, 10, 36, 59, 194, 232, 87, 160, 212, 112, 160, 149, 19, 129, 15, 36, 234, 130, 22, 108, 80, 5, 179, 178, 198, 17, 107, 213, 181, 212, 224, 46, 221, 241, 86, 165, 223, 154, 56, 166, 248, 197, 64, 16, 76, 61, 51, 59, 190, 54, 149, 1, 41, 77, 178, 238, 94, 17, 182, 6, 228, 137, 33, 180, 127, 119, 76, 81, 22, 131, 247, 19, 78, 42, 16, 135, 102, 49, 175, 23, 84, 73, 24, 124, 132, 201, 93, 207, 217, 6, 212, 176, 142, 245, 106, 1, 113, 181, 63, 116, 62, 41, 117, 121, 83, 132, 5, 184, 180, 179, 189, 14, 234, 212, 119, 115, 144, 212, 71, 111, 199, 14, 18, 73, 240, 123, 55, 102, 36};
     int len = ARRAY_SIZE(arr);
-
-    printf("Unsorted: ");
-    print_arr(arr, len);
 
     profile_and_test_algo("Bubble sort", bubble_sort, arr, len);
     profile_and_test_algo("Insertion sort", insertion_sort, arr, len);
     profile_and_test_algo("Quick sort", insertion_sort, arr, len);
 
     putchar('\n');
+
+    profile_and_test_algo("stdlib quick sort", stdlib_qsort, arr, len);
 
     return 0;
 }
