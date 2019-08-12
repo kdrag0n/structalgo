@@ -7,7 +7,7 @@
  * Constants, types, and macros
  */
 
-#define SORT_RUNS_PER_IMPL 1000
+#define SORT_RUNS_PER_IMPL 10000
 
 #define NS_PER_SEC 1000000000
 #define true 1
