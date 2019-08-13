@@ -5,6 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Array Merging",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/out/array_merging",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build All"
+        },
+        {
             "name": "Array Reversal",
             "type": "cppdbg",
             "request": "launch",
@@ -29,6 +49,26 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/out/array_sorting",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Build All"
+        },
+        {
+            "name": "Binary Tree",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/out/binary_tree",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
