@@ -101,6 +101,7 @@ static void _bt_print_in_order(struct bnode *node, bool *printed) {
 static void bt_print_in_order(struct bnode *node) {
     bool printed = false;
     _bt_print_in_order(node, &printed);
+    putchar('\n');
 }
 
 static void bt_print_bfs(struct bnode *root_node) {
@@ -126,6 +127,8 @@ static void bt_print_bfs(struct bnode *root_node) {
             printf(", %d", node->val);
         }
     }
+
+    putchar('\n');
 }
 
 int main(void) {
