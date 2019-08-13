@@ -119,7 +119,7 @@ static void bt_print_bfs(struct bnode *root_node) {
         if (node->right != NULL)
             enqueue(&queue, node->right);
 
-        if (printed) {
+        if (!printed) {
             printf("%d", node->val);
             printed = true;
         } else {
