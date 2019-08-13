@@ -12,7 +12,7 @@
  */
 
 #define SORT_ARRAY_ELEMENTS 1000
-#define SORT_RUNS_PER_IMPL 1000
+#define SORT_RUNS_PER_IMPL 2000
 
 #define NS_PER_SEC 1000000000
 #define true 1
