@@ -11,7 +11,8 @@
  * Constants, types, and macros
  */
 
-#define SORT_RUNS_PER_IMPL 10000
+#define SORT_ARRAY_ELEMENTS 1000
+#define SORT_RUNS_PER_IMPL 1000
 
 #define NS_PER_SEC 1000000000
 #define true 1
@@ -178,6 +179,9 @@ static void print_arr(int *arr, int len) {
 }
 
 static void profile_and_test_algo(const char *label, sort_fn func, int *orig_data, int orig_len) {
+    printf("%s: ", label);
+    fflush(stdout);
+
     int runs = SORT_RUNS_PER_IMPL;
     size_t orig_bytes = sizeof(*orig_data) * orig_len;
 
@@ -213,7 +217,7 @@ static void profile_and_test_algo(const char *label, sort_fn func, int *orig_dat
         print_arr(new_data[0], orig_len);
     }
 
-    printf("%s time: %.0lf ns\n", label, d_per_run);
+    printf("%.1lf μs\n", d_per_run / 1000);
 
     // Free allocated memory
     for (int run = 0; run < runs; run++)
@@ -222,9 +226,20 @@ static void profile_and_test_algo(const char *label, sort_fn func, int *orig_dat
     free(new_data);
 }
 
+void fill_random(int *arr, int len) {
+    for (int i = 0; i < len; i++)
+        arr[i] = rand();
+}
+
 int main(void) {
-    int arr[] = {197, 44, 194, 71, 204, 132, 78, 148, 192, 125, 177, 29, 12, 66, 172, 66, 32, 53, 17, 36, 225, 150, 237, 163, 112, 137, 35, 219, 20, 105, 35, 216, 148, 210, 18, 83, 73, 77, 212, 15, 201, 138, 25, 213, 203, 197, 28, 216, 231, 26, 1, 205, 175, 238, 117, 18, 124, 133, 236, 125, 219, 2, 90, 98, 193, 107, 180, 16, 165, 123, 12, 115, 10, 36, 59, 194, 232, 87, 160, 212, 112, 160, 149, 19, 129, 15, 36, 234, 130, 22, 108, 80, 5, 179, 178, 198, 17, 107, 213, 181, 212, 224, 46, 221, 241, 86, 165, 223, 154, 56, 166, 248, 197, 64, 16, 76, 61, 51, 59, 190, 54, 149, 1, 41, 77, 178, 238, 94, 17, 182, 6, 228, 137, 33, 180, 127, 119, 76, 81, 22, 131, 247, 19, 78, 42, 16, 135, 102, 49, 175, 23, 84, 73, 24, 124, 132, 201, 93, 207, 217, 6, 212, 176, 142, 245, 106, 1, 113, 181, 63, 116, 62, 41, 117, 121, 83, 132, 5, 184, 180, 179, 189, 14, 234, 212, 119, 115, 144, 212, 71, 111, 199, 14, 18, 73, 240, 123, 55, 102, 36};
+    int arr[SORT_ARRAY_ELEMENTS];
     int len = ARRAY_SIZE(arr);
+
+    printf("Filling array with %d random numbers... ", SORT_ARRAY_ELEMENTS);
+    fflush(stdout);
+    srand(time(NULL));
+    fill_random(arr, len);
+    printf("done.\n\n");
 
     profile_and_test_algo("Bubble sort", bubble_sort, arr, len);
     profile_and_test_algo("Insertion sort", insertion_sort, arr, len);
