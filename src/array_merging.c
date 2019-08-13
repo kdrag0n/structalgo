@@ -14,13 +14,13 @@
 typedef _Bool bool;
 typedef void (*sort_fn)(int *arr, int len);
 
-void swap(int *arr, int a, int b) {
+static void swap(int *arr, int a, int b) {
     int temp_a = arr[a];
     arr[a] = arr[b];
     arr[b] = temp_a;
 }
 
-void print_arr(int *arr, int len) {
+static void print_arr(int *arr, int len) {
     for (int i = 0; i < len; i++) {
         printf("%d ", arr[i]);
     }
@@ -28,7 +28,7 @@ void print_arr(int *arr, int len) {
     putchar('\n');
 }
 
-int merge_arrays(int *dest_arr, int dest_cap, int *arr1, int len1, int *arr2, int len2) {
+static int merge_arrays(int *dest_arr, int dest_cap, int *arr1, int len1, int *arr2, int len2) {
     int dest_pos = 0;
     int i1 = 0;
     int i2 = 0;

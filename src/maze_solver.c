@@ -29,7 +29,7 @@ static char *maze[] = {
 static int maze_lines = 8;
 static int maze_cols = 10;
 
-bool is_solved(void) {
+static bool is_solved(void) {
     for (int li = 0; li < maze_lines; li++) {
         char *line = maze[li];
 
@@ -40,16 +40,16 @@ bool is_solved(void) {
     return false;
 }
 
-void print_maze(void) {
+static void print_maze(void) {
     for (int li = 0; li < maze_lines; li++)
         printf("%s\n", maze[li]);
 }
 
-double pos_distance(struct position a, struct position b) {
+static double pos_distance(struct position a, struct position b) {
     return round(sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2)));
 }
 
-int solve_maze(void) {
+static int solve_maze(void) {
     int steps = 0;
     struct position cur_pos;
     struct position tgt_pos;

@@ -44,7 +44,7 @@ static struct tag stack_pop(struct node **stack) {
     return popped_val;
 }
 
-int validate_html(struct node **stack_ptr, char *line, unsigned long len) {
+static int validate_html(struct node **stack_ptr, char *line, unsigned long len) {
     struct node *stack = *stack_ptr;
 
     // State machine data

@@ -2,13 +2,13 @@
 
 #define ARRAY_SIZE(arr) sizeof(arr) / sizeof(*arr)
 
-void swap(int *arr, int a, int b) {
+static void swap(int *arr, int a, int b) {
     int temp_a = arr[a];
     arr[a] = arr[b];
     arr[b] = temp_a;
 }
 
-void reverse(int *arr, int len) {
+static void reverse(int *arr, int len) {
     int left = 0;
     int right = len - 1;
 
@@ -20,7 +20,7 @@ void reverse(int *arr, int len) {
     }
 }
 
-void print_arr(int *arr, int len) {
+static void print_arr(int *arr, int len) {
     for (int i = 0; i < len; i++) {
         printf("%d ", arr[i]);
     }

@@ -20,7 +20,7 @@ struct node *stack_push(struct node **stack, int val) {
     return new_node;
 }
 
-int stack_pop(struct node **stack) {
+static int stack_pop(struct node **stack) {
     struct node *popped_node = *stack;
     *stack = popped_node->next;
 
