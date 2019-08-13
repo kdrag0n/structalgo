@@ -14,12 +14,6 @@
 typedef _Bool bool;
 typedef void (*sort_fn)(int *arr, int len);
 
-static void swap(int *arr, int a, int b) {
-    int temp_a = arr[a];
-    arr[a] = arr[b];
-    arr[b] = temp_a;
-}
-
 static void print_arr(int *arr, int len) {
     for (int i = 0; i < len; i++) {
         printf("%d ", arr[i]);
